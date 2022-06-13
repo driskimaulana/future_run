@@ -72,7 +72,7 @@ public class Player {
     {
         speedX = -7;
         // if (x <= leftBox.posX + 52 && (575 -y) <= leftBox.getHeight()) {
-        if (x <= leftBox.posX +52 && (575 -y) <= leftBox.getHeight()) {
+        if (x <= leftBox.posX +50 && (575 -y) <= leftBox.getHeight()) {
             speedX = 0;
         }
         x += speedX;

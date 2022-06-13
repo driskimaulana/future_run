@@ -64,13 +64,15 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
         }
         
         firstBox = listBox.get(1);
-        player.setX(firstBox.getPosX());
+        player.setX(firstBox.getPosX() + 5);
         // randomGenerator = new Random();
     }
 
     public void startGame()
     {
         thread.start();
+        System.out.println("awal : " + player.getX());
+        System.out.println("awal + land : " + listBox.get(1).posX);
     }
     
     @Override
@@ -87,9 +89,37 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
                     // if (((player.getX() >= landBox.posX ) && (player.getX()+25 < landBox.posX + 50))) {
                     
                     // if(player.getX() >= landBox.posX){
-                    if(player.getX() <= landBox.posX + 50){
-                        if((player.getX() +5 > listBox.get(idx+1).posX + 50 && player.getX() +30 < listBox.get(idx).posX +50) || (player.getX() +5 > listBox.get(idx+1).posX + 50)){
-                        // if(player.getX() +5 > listBox.get(idx+1).posX + 50 ){
+                    // if(player.getX() <= landBox.posX + 50){
+                    //     if((player.getX() +5 > listBox.get(idx+1).posX + 25) || player.getX() + 25 > landBox.posX+50){
+                    //     // if(player.getX() +5 > listBox.get(idx+1).posX + 50 ){
+                    //     // if(player.getX() +5 > listBox.get(idx+1).posX + 50 ){
+                    //         System.out.println("udin" );
+                    //         System.out.println("idx: " + idx);
+                    //         currentBoxHeight = landBox.height;
+                    //         currentBox = listBox.get(idx);
+                    //         if (idx < 11) {
+                    //             leftBox = listBox.get(idx+1);
+                    //         }else {
+                                
+                    //             leftBox = listBox.get(11);
+                    //         }
+                    //         if(idx <= 0){
+                    //             rightBox = listBox.get(0);
+                    //         }else{
+                    //             rightBox = listBox.get(idx-1);
+    
+                    //         }
+                    //         break;
+                            
+                    //     }
+                    // }
+                    // (player.getX() < landBox.posX + 50 && player.getX()+25 > landBox.posX + 50) ||
+                        // (player.getX()+25 < landBox.posX + 50 && player.getX() > landBox.posX)
+                    // (player.getX()+25 < landBox.posX + 50 && player.getX() > landBox.posX)
+                    if((player.getX() > landBox.posX -50 && player.getX() < landBox.posX-25) 
+                        
+                        ){
+                        System.out.println("udin" );
                             System.out.println("idx: " + idx);
                             currentBoxHeight = landBox.height;
                             currentBox = listBox.get(idx);
@@ -107,8 +137,14 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
                             }
                             break;
                             
-                        }
                     }
+                    // else {
+                    //     currentBox = listBox.get(1);
+                    //     leftBox =listBox.get(0);
+                    //     rightBox = listBox.get(2);
+                    //     System.out.println("cb : " + currentBox.posX);
+                    // }
+                    
                     
                     
 
