@@ -8,37 +8,42 @@ import java.awt.Color;
 
  import javax.swing.JFrame;
 
- public class GameWindow extends JFrame{
+import presenter.MouseInput;
 
-    public static final int SCREEN_WIDTH = 600;
+ public class GameWindow extends JFrame{
 
     public GameScreen gameScreen;
 
+    public GameMenu gameMenu;
+
     public GameWindow()
     {
-        super("FutureRun");
+        super("The Survive Hop");
 
-        setSize(SCREEN_WIDTH, SCREEN_WIDTH);
+        setSize(400, 320);
         setLocation(400, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        gameScreen = new GameScreen();
-        this.addKeyListener(gameScreen);
-        add(gameScreen);
+        this.addMouseListener(new MouseInput());
 
-        setBackground(Color.red);
+        setBackground(Color.white);
     }
 
     public void startGame()
     {
-        gameScreen.startGame();
+        // gameScreen.startGame();
     }
     
     public static void main(String[] args) {
-        GameWindow gw = new GameWindow();
-        gw.setVisible(true);
-        gw.startGame();
+        // GameWindow gw = new GameWindow();
+        // gw.setVisible(true);
+        // gw.pack();
+
+        GameMenu gm = new GameMenu();
+
+
+        // gw.startGame();
     }
 
 }

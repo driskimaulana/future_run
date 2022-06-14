@@ -1,5 +1,10 @@
 package view.userintefaces;
 
+import static view.utils.Constants.GameConstants.BOX_WIDTH;
+import static view.utils.Constants.GameConstants.GAME_SCREEN_HEIGHT;
+import static view.utils.Constants.GameConstants.GAME_SCREEN_WIDTH;
+import static view.utils.Constants.GameConstants.PLAYER_WIDTH;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -8,17 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import presenter.ProsesTexperiences;
+import view.entities.PlayerProfile;
 import view.gameobject.Land;
 import view.gameobject.LandBox;
 import view.gameobject.Player;
+import view.utils.Constants.GameState.STATE;;
 
 public class GameScreen extends JPanel implements Runnable, KeyListener {
-
-    public static final int LAND_POS_X = 0;
-    public static final int LAND_POS_Y = 400;
-    public static final int GRAVITY = 5;
 
     Random randomGenerator;
 
@@ -41,15 +46,22 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 
     int idx;
 
-    public GameScreen()
+    private GameMenu gm;
+
+    public static STATE state = STATE.PLAYING;
+
+    JFrame game;
+
+    PlayerProfile currentPlayer;
+
+    public GameScreen(PlayerProfile currentPlayer)
     {
+        this.currentPlayer = currentPlayer;
         thread = new Thread(this);
-        player = new Player();
-        // land = new Land();
+        player = new Player(this.currentPlayer.getAdapt(), this.currentPlayer.getFall());
         listBox = new ArrayList<LandBox>();
         randomGenerator = new Random();
 
-        isPlayerCanMove = true;
 
         for(int i = 11; i >= 0; i--)
         {
@@ -65,160 +77,159 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
         
         firstBox = listBox.get(1);
         player.setX(firstBox.getPosX() + 5);
+
+        game = new JFrame("The Survive Hop");
+
+        game.setSize(GAME_SCREEN_HEIGHT, GAME_SCREEN_WIDTH);
+        game.setLocation(400, 100);
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setResizable(false);
+
+        game.addKeyListener(this);
+        game.setVisible(true);
+        game.add(this);
+        this.startGame();
         // randomGenerator = new Random();
     }
-
+    
+    public void init()
+    {
+        
+    }
+    
     public void startGame()
     {
         thread.start();
-        System.out.println("awal : " + player.getX());
-        System.out.println("awal + land : " + listBox.get(1).posX);
     }
     
     @Override
     public void run() {
 
-        while (true) {
-            // System.out.println(1);
-            try {
-                int upperBound = ( (int)player.getX() / 100) * 100;
-                boolean canmove = false;
-                idx = 1;
+        // if (state == STATE.PLAYING) {
+            while (true) {
+                // System.out.println(1);
+                try {
+                    if(state == STATE.PLAYING)
+                    {
 
-                for (LandBox landBox : listBox) {
-                    // if (((player.getX() >= landBox.posX ) && (player.getX()+25 < landBox.posX + 50))) {
-                    
-                    // if(player.getX() >= landBox.posX){
-                    // if(player.getX() <= landBox.posX + 50){
-                    //     if((player.getX() +5 > listBox.get(idx+1).posX + 25) || player.getX() + 25 > landBox.posX+50){
-                    //     // if(player.getX() +5 > listBox.get(idx+1).posX + 50 ){
-                    //     // if(player.getX() +5 > listBox.get(idx+1).posX + 50 ){
-                    //         System.out.println("udin" );
-                    //         System.out.println("idx: " + idx);
-                    //         currentBoxHeight = landBox.height;
-                    //         currentBox = listBox.get(idx);
-                    //         if (idx < 11) {
-                    //             leftBox = listBox.get(idx+1);
-                    //         }else {
+                        idx = 1;
+        
+                        for (LandBox landBox : listBox) {
+                            
+                            if(
                                 
-                    //             leftBox = listBox.get(11);
-                    //         }
-                    //         if(idx <= 0){
-                    //             rightBox = listBox.get(0);
-                    //         }else{
-                    //             rightBox = listBox.get(idx-1);
-    
-                    //         }
-                    //         break;
-                            
-                    //     }
-                    // }
-                    // (player.getX() < landBox.posX + 50 && player.getX()+25 > landBox.posX + 50) ||
-                        // (player.getX()+25 < landBox.posX + 50 && player.getX() > landBox.posX)
-                    // (player.getX()+25 < landBox.posX + 50 && player.getX() > landBox.posX)
-                    if((player.getX() > landBox.posX -50 && player.getX() < landBox.posX-25) 
-                        
-                        ){
-                        System.out.println("udin" );
-                            System.out.println("idx: " + idx);
-                            currentBoxHeight = landBox.height;
-                            currentBox = listBox.get(idx);
-                            if (idx < 11) {
-                                leftBox = listBox.get(idx+1);
-                            }else {
+                                (player.getX() > landBox.posX - BOX_WIDTH && player.getX()+ PLAYER_WIDTH < landBox.posX)
+        
                                 
-                                leftBox = listBox.get(11);
+                                ){
+                                    System.out.println("getout : " + idx);
+                                    System.out.println("y : " + (player.getY()));
+                                    System.out.println("land y : " + ((GAME_SCREEN_WIDTH - PLAYER_WIDTH) - landBox.height));
+                                    System.out.println("player : "  + player.getX());
+                                    System.out.println("landbox : "  + landBox.posX);
+                                    System.out.println("idx: " + idx);
+                                    currentBoxHeight = landBox.height;
+                                    currentBox = listBox.get(idx);
+                                    // listBox.get(idx).isStepped = true;
+                                    if (idx < 11) {
+                                        leftBox = listBox.get(idx+1);
+                                    }else {
+                                        
+                                        leftBox = listBox.get(11);
+                                    }
+                                    if(idx <= 0){
+                                        rightBox = listBox.get(0);
+                                    }else{
+                                        rightBox = listBox.get(idx-1);
+            
+                                    }
+                                    break;
+                                    
                             }
-                            if(idx <= 0){
-                                rightBox = listBox.get(0);
-                            }else{
-                                rightBox = listBox.get(idx-1);
-    
-                            }
-                            break;
+                           
+                            idx++;
                             
-                    }
-                    // else {
-                    //     currentBox = listBox.get(1);
-                    //     leftBox =listBox.get(0);
-                    //     rightBox = listBox.get(2);
-                    //     System.out.println("cb : " + currentBox.posX);
-                    // }
-                    
-                    
-                    
-
-                    // if (((player.getX() >= landBox.posX ) && (player.getX()+25 < landBox.posX +50))) {
-                    //     currentBoxHeight = landBox.height;
-                    //     currentBox = landBox;
-                    //     if (idx <= 11) {
-                    //         leftBox = listBox.get(idx +1);
-                    //     }else {
-                            
-                    //         leftBox = listBox.get(11);
-                    //     }
-                    //     if(idx < 0){
-                    //         rightBox = listBox.get(0);
-                    //     }else{
-                    //         rightBox = listBox.get(idx-1);
-
-                    //     }
-                    //     break;
-                    // }
-                    idx++;
-                    
+                        }
+        
+                        player.update(currentBox, leftBox, rightBox);
+                    }    
+                    this.update();
+                    repaint();
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                
-                // nextBox = listBox.get(idx+1);
-
-                // if(listBox.get(idx).height < listBox.get(idx+1).height){
-                //     isPlayerCanMove = false;
-                // }
-
-                player.update(currentBox, leftBox, rightBox);
-                // mainCharacter.update();
-                // land.update();
-                // this.update();
-                repaint();
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-        }
+        // }
+
         
     }
 
     public void update()
     {
-        for (LandBox imageLand : listBox) {
-            imageLand.posX++;
-        }
-
-        LandBox box = listBox.get(0);
-        if(box.posX - 50 > 500)
+        if(state == STATE.PLAYING)
         {
-            LandBox newBox = new LandBox();
-            int randomWidth = randomGenerator.nextInt(300 - 0) +0;
-            newBox.posX = listBox.get(listBox.size() - 1).posX - 50;
-            newBox.height = randomWidth;
-            listBox.add(newBox);
-        }
 
-        if(box.posX - 50 > 600)
+            for (LandBox imageLand : listBox) {
+                imageLand.posX++;
+            }
+    
+            LandBox box = listBox.get(0);
+            if(box.posX - 50 > 500)
+            {
+                LandBox newBox = new LandBox();
+                int randomWidth = randomGenerator.nextInt(300 - 0) +0;
+                newBox.posX = listBox.get(listBox.size() - 1).posX - 50;
+                newBox.height = randomWidth;
+                listBox.add(newBox);
+            }
+    
+            if(box.posX - 50 > 600)
+            {
+                listBox.remove(0);
+            }
+        }else if(state == STATE.GAMEOVER)
         {
-            listBox.remove(0);
+            // save progress to database
+            if(this.currentPlayer.getId() == -1)
+            {
+                String query = "INSERT INTO texperiences (username, adapt, fall) VALUES ('" + this.currentPlayer.getUsername() + "', " + player.getAdapt() + ", " + this.player.getFall() + ")";
+                ProsesTexperiences tex = new ProsesTexperiences();
+                tex.insertData(query);
+                game.setVisible(false);
+                GameMenu gm = new GameMenu();
+                gm.setVisible(true);
+                game.dispose();
+                thread.stop();
+                // System.exit(0);
+            }else {
+                String query = "UPDATE texperiences SET adapt=" + this.player.getAdapt() + ", fall=" + this.player.getFall() + " WHERE id=" + this.currentPlayer.getId();
+                // System.out.println(query);
+                ProsesTexperiences tex = new ProsesTexperiences();
+                tex.insertData(query);
+                game.setVisible(false);
+                GameMenu gm = new GameMenu();
+                gm.setVisible(true);
+                game.dispose();
+                thread.stop();
+            }
         }
     }
 
     public void paint(Graphics g)
     {
+        this.draw(g);
+    }
+
+    public void draw(Graphics g)
+    {
         g.setColor(Color.white);
         g.fillRect(0, 0, getWidth(), getHeight());
+        
         for (LandBox box : listBox) {
             g.setColor(Color.blue);
-            g.fillRect(box.getPosX(),600 - box.getHeight(), 50, box.getHeight());
+            g.fillRect(box.getPosX(),GAME_SCREEN_HEIGHT - box.getHeight(), 50, box.getHeight());
         }
-        // player.draw(g, firstBox.height);
         player.draw(g);
     }
 
@@ -240,7 +251,10 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
         }
 
         if(keycode == KeyEvent.VK_SPACE){
-            System.out.println("idx" + idx);
+            this.state = STATE.GAMEOVER;
+        }
+
+        if (keycode == KeyEvent.VK_DOWN) {
             listBox.get(idx).height+=10;
         }
         

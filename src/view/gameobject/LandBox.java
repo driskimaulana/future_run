@@ -4,8 +4,10 @@ public class LandBox {
     
     public int posX;
     public int height;
+    public boolean isStepped;
 
     public LandBox(){
+        isStepped = false;
  
     }
 
