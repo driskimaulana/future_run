@@ -1,9 +1,9 @@
 /**
  * Filename : TabelPengguna.javva
  * Programmer : D'Riski Maulana
- * Date : May 20, 2022
+ * Date : June 10, 2022
  * Email : D'Riski Maulana
- * Deskripsi : package model untuk mengakses tabel pengguna 
+ * Deskripsi : package model untuk mengakses tabel texperiences
  */
 
 package model;
@@ -14,7 +14,6 @@ public class TabelTexperiences extends DB {
 
     public TabelTexperiences() throws Exception, SQLException {
         super();
-        //TODO Auto-generated constructor stub
     }
 
     public void getTexperiences()
@@ -24,18 +23,16 @@ public class TabelTexperiences extends DB {
             String query = "SELECT * FROM texperiences";
             createQuery(query);
         } catch (Exception e) {
-            //TODO: handle exception
             System.out.println(e.toString());
         }
     }
 
     public void insert(String query)
     {
+        // insert data
         try {
-            // String query = "";
             createUpdate(query);
         } catch (Exception e) {
-            //TODO: handle exception
             System.out.println(e.toString());
         }
     }

@@ -1,7 +1,7 @@
 /**
  * Filename : KontrakPresenter.java
  * Programmer : D'Riski Maulana
- * Date : May 10, 2022
+ * Date : June 10, 2022
  * Email : driskimaulana.upi.edu
  * Website : driskimaulana.c120.me
  * Deskripsi : package presenter, sebagai janji untuk diterapkan pada implemented class
@@ -10,7 +10,7 @@
 package presenter;
 
 public interface KontrakPresenter {
-
+    // required method
     public void prosesData();
     public int getId(int i);
     public int getFall(int i);

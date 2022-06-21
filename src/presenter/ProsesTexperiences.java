@@ -1,5 +1,14 @@
 package presenter;
 
+/**
+ * Filename : ProsesTexperiences.java
+ * Programmer : D'Riski Maulana
+ * Date : 10 June 2022
+ * Email : driskimaulana@upi.edu
+ * Website : driskimaulana.c120.me
+ * Deskripsi : class used to create communication to model, processing all request (create or read) from views
+ */
+
 import java.util.ArrayList;
 
 import model.TabelTexperiences;
@@ -35,7 +44,6 @@ public class ProsesTexperiences implements KontrakPresenter {
                 texperiences.setUsername(tabelTexperiences.getResult().getString(2));
                 texperiences.setAdapt(Integer.parseInt(tabelTexperiences.getResult().getString(3)));
                 texperiences.setFall(Integer.parseInt(tabelTexperiences.getResult().getString(4)));
-                // texperiences.setTelepon(tabelTexperiences.getResult().getString(4));
                 data.add(texperiences); 
             }
 
@@ -49,20 +57,19 @@ public class ProsesTexperiences implements KontrakPresenter {
 
     public void insertData(String query)
     {
+        // insert new user
         try {
             tabelTexperiences.insert(query);
         } catch (Exception e) {
-            //TODO: handle exception
             System.err.println(e);
         }
     }
 
+    // get data
     @Override
     public int getId(int i) {
         return data.get(i).getId();
     }
-
-    
 
     @Override
     public int getSize() {

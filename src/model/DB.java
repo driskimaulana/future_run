@@ -3,7 +3,7 @@ package model;
 /**
  * Filename : DB.java
  * Programmer : D'Riski Maulana
- * Date : 14 Juni 2022
+ * Date : 10 June 2022
  * Email : driskimaulana@upi.edu
  * Website : driskimaulana.c120.me
  * Deskripsi : package model untuk mengakses basis data
@@ -17,7 +17,8 @@ import java.sql.Statement;
 
 public class DB {
 
-    private String ConAddress = "jdbc:mysql://localhost:3306/survive_hop?user=root&password=";
+    // class attribute
+    private String ConAddress = "jdbc:mysql://localhost:3306/survive_hop?user=root&password="; // detail databae used
     private Statement stmt = null;
     private ResultSet rs = null;
     private Connection conn = null;

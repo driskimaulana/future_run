@@ -1,5 +1,14 @@
 package view.entities;
 
+/**
+ * Filename : PlayerProfile.java
+ * Programmer : D'Riski Maulana
+ * Date : 10 June 2022
+ * Email : driskimaulana@upi.edu
+ * Website : driskimaulana.c120.me
+ * Deskripsi : class player with attribute same with texperiences table attribute
+ */
+
 public class PlayerProfile {
     
     // class attribute
@@ -24,6 +33,7 @@ public class PlayerProfile {
 
     public PlayerProfile(String username)
     {
+        // constructors for new player
         this.id = -1;
         this.username = username;
         this.fall = 0;

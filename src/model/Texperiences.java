@@ -1,5 +1,14 @@
 package model;
 
+/**
+ * Filename : Texperiences.java
+ * Programmer : D'Riski Maulana
+ * Date : 10 June 2022
+ * Email : driskimaulana@upi.edu
+ * Website : driskimaulana.c120.me
+ * Deskripsi : entity for Texperiences table rows
+ */
+
 import java.sql.SQLException;
 
 public class Texperiences extends DB{
@@ -13,6 +22,7 @@ public class Texperiences extends DB{
         super();
     }
 
+    // getter and setter
     public void setId(int id) {
         this.id = id;
     }
